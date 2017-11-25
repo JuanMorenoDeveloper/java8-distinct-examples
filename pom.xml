@@ -11,11 +11,15 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit.version>4.12</junit.version>
+		<junit.jupiter.version>5.0.2</junit.jupiter.version>
+		<junit.platform.version>1.0.2</junit.platform.version>
 		<maven.compiler.version>3.6.2</maven.compiler.version>
 		<eclipse-collections.version>8.2.0</eclipse-collections.version>
 		<vavr.version>0.9.0</vavr.version>
 		<streamex.version>0.6.5</streamex.version>
+		<maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
+		<coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -35,9 +39,9 @@
 		</dependency>
 		<!--Testing -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -69,6 +73,38 @@
 								<descriptorRef>jar-with-dependencies</descriptorRef>
 							</descriptorRefs>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>${junit.platform.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>${coveralls-maven-plugin.version}</version>
+				<configuration>
+					<repoToken>${repoToken}</repoToken>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
